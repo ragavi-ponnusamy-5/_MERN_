@@ -1,0 +1,902 @@
+react day6 day7,day 8 notes
+------------------------------------------------------------------
+rendering - updating the UI
+rerendering
+reconsiliation process
+virtual dom
+real dom
+defing algo
+we are using functional component insteaded of class componenrt
+
+sap-react s a single page application
+react is a library
+
+usestate - have memory
+useref - no memory
+
+------------------------------------------------------------------
+1.
+
+import Parent from "./components/Parent"
+import Child from './components/Child'
+import { useState } from "react"
+import Footer from "./components/Footer"
+function App() {
+  const [count,setCount]= useState(5)
+ 
+  return (
+    <>
+      <h1>Vanakkam! {count} </h1>
+      <button onClick={()=>{setCount(count+1)}}>➕</button>
+       <button onClick={()=>{setCount(count-1)}}>➖</button>
+      <Parent/>
+      <Child/>
+      <Footer/>
+    </>
+  )
+}
+
+export default App
+----------------------------------------------------------------------
+mine
+
+import { useState } from "react"
+
+function App() {
+  const [color,setColor ]= useState("Black")
+  const [color2,setColor2 ]= useState("Green")
+ 
+  return (
+    <>
+      <h1>Color: {color} </h1>
+      <h1>Color: {color2} </h1>
+      <button onClick={()=>{setColor("red")}}>red</button>
+      <button onClick={()=>{setColor2("Blue")}}>Blue</button>
+      
+    </>
+  )
+}
+
+export default App
+---------------------------------------------------------------
+mam code
+
+import { useState } from "react"
+
+function App() {
+  const [color,setColor ]= useState("Black")
+ 
+ 
+  return (
+    <>
+      <h1>Color: {color} </h1>
+      <button onClick={()=>{setColor("red")}}>red</button>
+      <button onClick={()=>{setColor("Blue")}}>Blue</button>
+      <button onClick={()=>{setColor("Green")}}>Green</button>
+    </>
+  )
+}
+
+export default App
+
+----------------------------------------------------------
+
+with color
+
+import { useState } from "react"
+
+function App() {
+  const [color,setColor ]= useState("Black")
+ 
+ 
+  return (
+    <>
+      <h1 style={{color}}>Color </h1>
+      <button onClick={()=>{setColor("red")}}>red</button>
+      <button onClick={()=>{setColor("Blue")}}>Blue</button>
+      <button onClick={()=>{setColor("Green")}}>Green</button>
+    </>
+  )
+}
+
+export default App
+
+------------------------------------------------------------------
+try to add bg colour
+---------------------------------------------------------------------
+On Off program
+
+
+import { useState } from "react"
+
+function App() {
+  const [isOn,setIsOn ]= useState(false)
+ 
+ 
+  return (
+    <>
+      <h1>{isOn ? "ON" : "OFF" }</h1>
+
+      <button onClick={()=> setIsOn(!isOn)}>switch</button>
+
+    </>
+  )
+}
+
+export default App
+------------------------------------------------------------------
+Array len
+
+import { useState } from "react"
+
+function App() {
+  const [a,seta ]= useState([0,1,2,3]);
+ 
+ 
+  return (
+    <>
+      <h1>{a }</h1>
+
+      <button onClick={()=> seta(a.length)}>Array Length</button>
+
+    </>
+  )
+}
+
+export default App
+---------------------------------------------------------------------
+
+slice method
+push method
+try all array methods that we have used in js
+--------------------------------------------------------------------
+
+import { useState } from "react"
+
+function App() {
+  const [a,seta ]= useState({name:"ai"});
+ 
+ 
+  return (
+    <>
+      <h1>{a.name }</h1>
+
+      <button onClick={()=> seta({name:"react"})}>click</button>
+      <button onClick={()=> seta({name:"js"})}>click</button>
+
+    </>
+  )
+}
+
+export default App
+--------------------------------------------------------------------
+objects
+
+import { useState } from "react"
+
+function App() {
+  const [a,seta ]= useState({name:"ai"});
+ 
+ 
+  return (
+    <>
+      <h1>{a.name }</h1>
+
+      <button onClick={()=> seta({name:"react"})}>click</button>
+      <button onClick={()=> seta({name:"js"})}>click</button>
+
+    </>
+  )
+}
+
+export default App
+------------------------------------------------------------------------
+
+like and dislike...(try  if they give dislike... the like should reduce)
+
+import { useState } from "react"
+
+function App() {
+ const [count1,setCount1]= useState(0)
+ 
+ const [count2,setCount2]= useState(0)
+  return (
+    <>
+      <h1>👍Like {count1}</h1>
+      <h1>👎Dislike {count2}</h1>
+      <button onClick={()=>{setCount1(count1+1)}}>Like</button>
+      <button onClick={()=>{setCount2(count2+1)}}>DisLike</button>
+
+    </>
+  )
+}
+
+export default App
+---------------------------------------------------------------------
+my try
+
+
+import { useState } from "react"
+
+function App() {
+ const [count1,setCount1]= useState(0)
+ 
+ const [count2,setCount2]= useState(0)
+  return (
+    <>
+      <h1>👍Like {count1}</h1>
+      <h1>👎Dislike {count2}</h1>
+      <button onClick={()=>{setCount1(count1+1)}}>Like</button>
+      <button onClick={()=>{setCount2(count2+1); setCount1(count1-1); }}>DisLike</button>
+
+    </>
+  )
+}
+
+export default App
+---------------------------------------------------------------------------------------------------
+props/probs means property....pass the data from one component to another
+parent to childe - we use props
+child to parent we need callback
+----------------------------------------------------------------------------------------------------
+child to parent using callback
+
+child.jsx
+import React from 'react'
+
+
+export default function Child({custombuttton}) {
+  return (
+    <div>
+        <h1>This is a child component</h1>
+          <button onClick={custombuttton}>Cclick</button>
+        </div>
+
+  )
+}
+
+parent.jsx
+
+import React, { useState } from 'react'
+import Child from './Child'
+
+export default function Parent() {
+    const [count,setCount]=useState(0);
+    const increment=()=>{setCount(count+1)}
+  return (
+    <div>
+       <h1> This is Parent component </h1>
+       <Child custombuttton= {increment} />
+
+       <h1>{count}</h1>
+       <button onClick={()=>{setCount(count+1)}}>Click</button>
+    </div>
+  )
+}
+----------------------------------------------------------------------------------------------------
+parent to child by props
+
+App.jsx
+
+import Parent from "./components/Parent";
+
+
+function App() {
+  const name="aids"
+  return (
+    <>
+    <h1>This is app component {name}</h1>
+      <Parent propsname={name}/>
+
+    </>
+  );
+}
+
+export default App;
+
+Grandchild.jsx
+
+import React from 'react'
+import GrandParent from './GrandParent'
+
+export default function GrandChild({propsgrandchild}) {
+  return (
+    <div><h1>This is a GrandChild Component {propsgrandchild}</h1>
+    <GrandParent propsgp={propsgrandchild}/>
+    </div>
+    
+  )
+}
+
+GrandParent
+import React from 'react'
+
+export default function GrandParent({propsgp}) {
+  return (
+    <div><h1>This is GrandParent component {propsgp} </h1> </div>
+  )
+}
+----------------------------------------------------------------------------------------------------
+
+productlist
+
+import Parent from "./components/Parent";
+
+
+function App() {
+  const productList=["fuirt","vegs","milk"]
+  return (
+    <>
+    <h1>This is app component</h1>
+      
+   {productList.map((i,s)=>(<p key={s}>{i}</p>))}
+    </>
+  );
+}
+
+export default App;
+-------------------------------------------------------------------------------------------------------
+array of objet with map
+
+import Parent from "./components/Parent";
+
+
+function App() {
+  const productList= [ { id: 1, name: "Apple", price: 120 },
+  { id: 2, name: "Milk", price: 40 },
+  { id: 3, name: "Tomato", price: 30 }
+];
+
+  return (
+    <>
+    <h1>This is app component</h1>
+      
+   {productList.map((item,index)=>(
+    <div key={index}>
+      <h2>{item.id}</h2>
+      <p> Price: ${item.price}</p>
+      <hr />
+    </div>
+   ))}
+    </>
+  );
+}
+
+export default App;
+---------------------------------------------------------------------------------------------------
+e web products 
+
+import Parent from "./components/Parent";
+
+
+function App() {
+  
+  const products = [
+  {
+    id: 1,
+    name: "Wireless Earbuds",
+    price: 1999,
+    category: "Electronics",
+    rating: 4.5,
+    image: "https://picsum.photos/200?random=1",
+    inStock: true
+  },
+  {
+    id: 2,
+    name: "Men's Running Shoes",
+    price: 2499,
+    category: "Footwear",
+    rating: 4.2,
+    image: "https://picsum.photos/200?random=2",
+    inStock: false
+  },
+  {
+    id: 3,
+    name: "Smartwatch Series X",
+    price: 3999,
+    category: "Wearables",
+    rating: 4.7,
+    image: "https://picsum.photos/200?random=3",
+    inStock: true
+  },
+  {
+    id: 4,
+    name: "Cotton Oversized T-Shirt",
+    price: 499,
+    category: "Clothing",
+    rating: 4.0,
+    image: "https://picsum.photos/200?random=4",
+    inStock: true
+  },
+  {
+    id: 5,
+    name: "Backpack 35L",
+    price: 1299,
+    category: "Bags",
+    rating: 4.3,
+    image: "https://picsum.photos/200?random=5",
+    inStock: true
+  }
+];
+
+
+  return (
+    <>
+    <center><h1><b><i>This is app component</i></b></h1></center>
+      {
+        products.map((item,index)=>(
+        <div key={item.id}>
+          <h3>{item.id}</h3>
+          <h3>{item.name}</h3>
+          <p><i>{item.price}</i></p>
+          <p>{item.category}</p>
+          <p>{item.rating}</p>
+           <img src={item.image} alt={item.name} width="200px"/>
+
+          <p>{item.inStock ? "In stock" : "Out of stock" }</p>
+          <hr/>
+        </div>
+        ))
+      }
+    </>
+  );
+}
+
+export default App;
+--------------------------------------------------------------------------------------------------------
+home work
+
+import Parent from "./components/Parent";
+
+
+function App() {
+  
+  const products = [
+  {
+    id: 1,
+    name: "Wireless Earbuds",
+    price: 1999,
+    category: "Electronics",
+    rating: 4.5,
+    image: "https://picsum.photos/200?random=1",
+    inStock: true
+  },
+  {
+    id: 2,
+    name: "Men's Running Shoes",
+    price: 2499,
+    category: "Footwear",
+    rating: 4.2,
+    image: "https://picsum.photos/200?random=2",
+    inStock: false
+  },
+  {
+    id: 3,
+    name: "Smartwatch Series X",
+    price: 3999,
+    category: "Wearables",
+    rating: 4.7,
+    image: "https://picsum.photos/200?random=3",
+    inStock: true
+  },
+  {
+    id: 4,
+    name: "Cotton Oversized T-Shirt",
+    price: 499,
+    category: "Clothing",
+    rating: 4.0,
+    image: "https://picsum.photos/200?random=4",
+    inStock: true
+  },
+  {
+    id: 5,
+    name: "Backpack 35L",
+    price: 1299,
+    category: "Bags",
+    rating: 4.3,
+    image: "https://picsum.photos/200?random=5",
+    inStock: true
+  }
+];
+
+
+  return (
+    <>
+    <center><h1><b><i>This is app component</i></b></h1></center>
+      {
+        products.map((item,index)=>(
+        <div key={item.id}>
+          <h3>{item.id}</h3>
+          <h3>{item.name}</h3>
+          <p><i>{item.price}</i></p>
+          <p>{item.category}</p>
+          <p>{item.rating}</p>
+           <img src={item.image} alt={item.name} width="200px"/>
+
+          <p>{item.inStock ? "In stock" : "Out of stock" }</p>
+          <hr/>
+        </div>
+        ))
+      }
+    </>
+  );
+}
+
+export default App;
+----------------------------------------------------------------------------
+9/12
+
+import Parent from "./components/Parent";
+
+
+function App() {
+    const handleName=(e)=>{console.log(e.target.value)}
+  return (
+    <>
+    <div>
+      <input type="text" placeholder="Enter your name:" value="user" onChange={handleName}/>
+      </div>
+    </>
+  );
+}
+
+export default App;
+----------------------------------------------------------------------------------
+
+import { useState } from "react";
+
+function App() {
+  const[name,setName]=useState();
+    const handleName=(e)=>{setName(e.target.value)}
+  return (
+    <>
+    <div>
+      <input type="text" placeholder="Enter your name:" value={name} onChange={handleName}/>
+   <p>{name}</p>
+      </div>
+    </>
+  );
+}
+
+export default App;
+-----------------------------------------------------------------------------------
+form submitted sucesssfully
+
+import { useState } from "react";
+
+function App() {
+  const[name,setName]=useState();
+    const handleName=(e)=>{setName(e.target.value)}
+    const handleSubmit=(e)=>{
+      e.preventDefault();
+      console.log("form submitted sucessfully");
+    }
+  return (
+    <>
+    <form onSubmit={handleSubmit}>
+      <input type="text" placeholder="Enter your name:" value={name} onChange={handleName}/>
+      <p>{name}</p>
+      <button type="submit">Submit</button>
+      </form>
+    </>
+  );
+}
+
+export default App;
+------------------------------------------------------------------------------------------
+import { useState } from "react";                                 
+
+function App() {
+  const[name,setName]=useState();
+  const[myname,setMyname]=useState();
+    const handleName=(e)=>{setName(e.target.value)}
+    const handleSubmit=(e)=>{
+      e.preventDefault();
+      console.log("form submitted sucessfully");
+    }
+    const setMyname
+  return (
+    <>
+    <form onSubmit={handleSubmit}>
+      <input type="text" placeholder="Enter your name:" value={name} onChange={handleName}/>
+      <p>{name}</p>
+      <button type="submit">Submit</button>
+      </form>
+    </>
+  );
+}
+
+export default App;
+----------------------------------------------------------------------------------------------
+form submiited with name
+
+import { useState } from "react";
+
+function App() {
+  const [name, setName] = useState("");
+  const [myname, setMyname] = useState("");
+
+  const handleName = (e) => {
+    setName(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setMyname(name); 
+    console.log("Form submitted successfully");
+    console.log("Name:", name);
+  };
+
+  return (
+    <>
+      <form onSubmit={handleSubmit}>
+        <input 
+          type="text" 
+          placeholder="Enter your name:" 
+          value={name} 
+          onChange={handleName}
+        />
+        <p>{name}</p>
+        <button type="submit">Submit</button>
+      </form>
+    </>
+  );
+}
+
+export default App;
+---------------------------------------------------------------------------------------------
+
+useRef
+
+
+import { useRef, useState } from "react";
+
+function App() {
+    const inRef =useRef();
+    const [name,setName]=useState();
+  const handleClick=()=>{setName(inRef.current.value); console.log(inRef.current.value)}
+  return (
+    <>
+      <input type="text" placeholder="Type something..." ref={inRef}/>
+      <button onClick={handleClick}>Submit</button>
+      <p>{name}</p>
+    </>
+  );
+}
+
+export default App;
+---------------------------------------------------------------------------------------------------
+import { useRef, useState } from "react";
+
+function App() {
+    const [name, setName] = useState("");
+  const [myname, setMyname] = useState("");
+  const [myage, setMyage] = useState("");
+  const [mymarks, setMymarks] = useState("");
+
+  const handleName = (e) => {
+    setName(e.target.value);
+  };
+  const handleage = (e) => {
+    setMyage(e.target.value);
+  };
+  const handlemarks = (e) => {
+    setMymarks(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setMyname(name); 
+    console.log("Form submitted successfully");
+    console.log("Name:", name);
+  };
+
+  return (
+    <>
+      <form onSubmit={handleSubmit}>
+        <input 
+          type="text" 
+          placeholder="Enter your name:" 
+          value={name} 
+          onChange={handleName}
+        />
+         <input 
+          type="text" 
+          placeholder="Enter your age:" 
+          value={name} 
+          onChange={handleName}
+        />
+         <input 
+          type="text" 
+          placeholder="Enter your marks:" 
+          value={name} 
+          onChange={handleName}
+        />
+        <p>{name}</p>
+        <button type="submit">Submit</button>
+      </form>
+
+    </>
+  );
+}
+
+export default App;
+--------------------------------------------------------------------------------------------------------------
+empty dep
+
+import { useEffect, useRef, useState } from "react";
+
+function App() {
+    const [type,setType]=useState(0);
+       useEffect(() => {
+      console.log("Rendering");
+      fetch('https://jsonplaceholder.typicode.com/photos')
+      .then(response => response.json())
+      .then(json => console.log(json))
+        },[]);
+    
+  return (
+    <>
+      <button onClick={()=>setType(type+1)}>+</button>
+    </>
+  );
+}
+
+export default App;
+------------------------------------------------------------------------------------------------------
+photos and albus
+variable dep
+
+import { useEffect, useRef, useState } from "react";
+
+function App() {
+    const [type,setType]=useState("photos");
+       useEffect(() => {
+      console.log("Rendering");
+      fetch(`https://jsonplaceholder.typicode.com/${type}`)
+      .then(response => response.json())
+      .then(json => console.log(json))
+        },[type]);
+    
+  return (
+    <>
+      <button onClick={()=>setType("photos")}>Photo</button>
+      <button onClick={()=>setType("albums")}>Album</button>
+    </>
+  );
+}
+
+export default App;
+-------------------------------------------------------------------------------------------------
+
+fetching data
+
+import { useEffect, useRef, useState } from "react";
+
+function App() {
+    const [type,setType]=useState("photos");
+    const [data,setData]=useState([])
+       useEffect(() => {
+      console.log("Rendering");
+      fetch(`https://jsonplaceholder.typicode.com/${type}`)
+      .then(response => response.json())
+      .then(json => setData(json))
+        },[type]);
+    
+  return (
+    <>
+      <button onClick={()=>setType("photos")}>Photo</button>
+      <button onClick={()=>setType("albums")}>Album</button>
+      <ul>
+        {data.slice(0,100).map(item=>(
+          <li>{item.title}</li> 
+        ))}
+        </ul>
+    </>
+  );
+}
+
+export default App;
+----------------------------------------------------------------------------------------------
+local storage
+
+localStorage.setItem("name","aids")
+undefined
+localStorage.getItem(name)
+null
+localStorage.getItem("name")
+'aids'
+localStorage.setItem("name",{ name:"aiml"});
+undefined
+localStorage.setItem("name",JSON.stringify({name:"aiml"})
+VM656:1 Uncaught SyntaxError: missing ) after argument listUnderstand this error
+localStorage.setItem("name",JSON.stringify({name:"aiml"}));
+undefined
+localStorage.getItem("name")
+'{"name":"aiml"}'
+JSON.parse(localStorage.getItem("name"))
+{name: 'aiml'}
+-----------------------------------------------------------------------------------------------
+local storage
+
+import { useState } from "react";
+
+function App() {
+  const [name, setName] = useState("");
+
+  const handleSave = () => {
+    localStorage.setItem("name", name);
+    setName(name); // trigger re-render so <p> updates
+  };
+
+  return (
+    <>
+      <input 
+        placeholder="name" 
+        value={name} 
+        onChange={(e) => setName(e.target.value)} 
+      />
+      
+      <button onClick={handleSave}>Save</button>
+
+      <p>{localStorage.getItem("name")}</p>
+    </>
+  );
+}
+
+export default App;
+---------------------------------------------------------------------------------------------------
+objects
+
+import { useState } from "react";
+
+function App() {
+  const [name, setName] = useState("");
+
+  const handleSave = () => {
+   const user={
+    name: name,
+    role:"student"
+   };
+localStorage.setItem("Name",JSON.stringify(user));
+   }
+
+  return (
+    <>
+      <input 
+        placeholder="name" 
+        value={name} 
+        onChange={(e) => setName(e.target.value)} 
+      />
+      
+      <button onClick={handleSave}>Save</button>
+
+      <p>{localStorage.getItem("name")}</p>
+    </>
+  );
+}
+
+export default App;
+----------------------------------------------------------------------------
+{" "} this is for spaces                                                   |
+----------------------------------------------------------------------------
+
+const express = require("express");
+const dotenv=require("dotenv");
+const connectdb = require("./config/db");
+const app=express();
+dotenv.config();
+connectdb();
+app.get("/",(req,res)=>{res.send("Welcome to Express JS");
+
+})
+app.get("/about",(req,res)=>{res.send("Welcome to About page");
+
+})
+app.get("/contact",(req,res)=>{res.send("Welcome to contact page");
+
+})
+const PORT=process.env.PORT;
+app.listen (PORT,()=>{
+    console.log(`Server is Running on the PORT ${PORT}`);
+})
